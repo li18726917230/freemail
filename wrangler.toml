@@ -2,27 +2,31 @@ name = "mailfree"
 # name = "mail-exhibit"
 main = "src/server.js"
 compatibility_date = "2024-01-01"
-keep_vars=true
+# 保留 Cloudflare 控制台中未在本文件声明的运行时变量
+keep_vars = true
 
 # D1 数据库绑定
 [[d1_databases]]
 binding = "TEMP_MAIL_DB"
 database_name = "mail_free_db" #你的d1数据库名称
 database_id = "6562200c-1027-47f2-a9f5-e41e1b7c5662" # 你的database_id
-# 登录会话过期时间（单位：天，默认7天）
-# 环境变量
+# 应用运行时变量（部署时会覆盖 Cloudflare 上的同名普通变量）
 [vars]
 # FORWARD_RULES="[{"prefix":"vip","email":"a@example.com"},{"prefix":"*","email":"example@qq.com"}]"
-ADMIN_NAME=""
-ADMIN_PASSWORD=""
-GUEST_PASSWORD="3er4#ER$"
+ADMIN_NAME="dy168888"
+ADMIN_PASSWORD="dy@168888..."
+# 留空关闭 guest 演示登录
+GUEST_PASSWORD = ""
+# 本地 Python 的 FREEMAIL_TOKEN 必须与服务端 JWT_TOKEN 完全一致
 JWT_TOKEN="dfvhluhdaslufhvdv"
-JWT_TOKENGUEST_PASSWORD="dfsfsfxzcv"
+# 网页登录会话有效天数
 SESSION_EXPIRE_DAYS="365"
+# 随机邮箱使用的收信域名，需在 Cloudflare Email Routing 将 Catch-all 发送到本 Worker
 MAIL_DOMAIN="ikunok.com"
-RESEND_API_KEY="RESEND发件密钥"
-SENDFLARE_API_KEY="SENDFLARE发件密钥"
-CYBERPERSONS_API_KEY="CYBERPERSONS发件密钥"
+# 仅通过 API 创建邮箱、读取收件时，无需配置发件服务
+RESEND_API_KEY = ""
+SENDFLARE_API_KEY = ""
+CYBERPERSONS_API_KEY = ""
 
 
 # 静态资源目录（Workers + Assets）
